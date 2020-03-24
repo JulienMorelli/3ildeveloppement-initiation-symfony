@@ -119,7 +119,7 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
     L'entité a maintenant été générée par symfony et ce trouve dans: ``src/Entity`` nous allons légérement la modifier:
     
     ````php
-   public function __construct()                           //On ajoute un constructeur pour qu'à la création de l'article la date soit mise à jour
+   public function __construct()                          //On ajoute un constructeur pour 
        {                                                   //qu'à la création de l'article 
            $this->date = new \DateTime();                  //la date soit mise à jour.
        }
@@ -140,63 +140,99 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
     ``php bin/console doctrine:migration:migrate``
     
 1. #### Creation d'un formulaire
-Pour cela nous allons donc utiliser la commande:
-          
-          ``php bin/console make:form``
-          
-Une fois le formulaire généré nous allons l'éditer dans :``src/Form/CreateArticleType.php``
-
-````php
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    Pour cela nous allons donc utiliser la commande:
+              
+              ``php bin/console make:form``
+              
+    Une fois le formulaire généré nous allons l'éditer dans :``src/Form/CreateArticleType.php``
+    
+    ````php
+        public function buildForm(FormBuilderInterface $builder, array $options)
+            {
+                $builder
+                    ->add('name')
+                    ->add('content')
+                    ->add('ajouter',SubmitType::class) //On ajoute un bouton pour soumettre le formulaire
+                ;
+            }
+    ````
+    On remarqueras que la ligne ``->add('date')`` a été enlevée car celle-ci serat automatiquement générée (sans saisie utilisateur).
+    
+    Dans notre controller nous allons maintenant appeller notre formulaire:
+    
+    ```php
+        //src/Controller/ArticleController
+        /**
+         * @Route("/article/create", name="create_article")
+         */
+        public function create(Request $request)
         {
-            $builder
-                ->add('name')
-                ->add('content')
-                ->add('ajouter',SubmitType::class) //On ajoute un bouton pour soumettre le formulaire
-            ;
+            $entitymanager = $this->getDoctrine()->getManager();            //Appel du manager d'entité
+            $article = new Article();                                       //Création de l'article
+    
+            $form = $this->createForm(CreateArticleType::class,$article);   //Appel/Création du formulaire
+            $form->handleRequest($request);                                 //Récupération du formulaire
+            if($form->isSubmitted() && $form->isValid()){                   //Vérification de la validité du formulaire
+                $article = $form->getData();                                // Récupération des informations saisies dans le formulaire
+                $entitymanager->persist($article);                          //Envoie de l'article en base de donnée
+                $entitymanager->flush();                                    //Confirmation de l'envoie
+            }
+    
+    
+            return $this->render('article/create.html.twig', [
+                'form'=>$form->createView(),                                 //Envoie du formulaire à la vue
+            ]);
         }
-````
-On remarqueras que la ligne ``->add('date')`` a été enlevée car celle-ci serat automatiquement générée (sans saisie utilisateur).
+    ```
+    
+    Puis nous allons l'afficher dans la vue ( Twig):
+    
+    ```twig
+        {# templates/article/create.html.twig #}
+        {% extends 'base.html.twig' %}
+        
+        {% block title %}Hello ArticleController!{% endblock %}
+        
+        {% block body %}
+        {{ form_start(form) }}
+        
+        {{ form_end(form) }}
+        {% endblock %}
+    ```
+    A présent notre formulaire est prêt à fonctionner.
 
-Dans notre controller nous allons maintenant appeller notre formulaire:
+1. #### Affichage des articles
 
-```php
-    //src/Controller/ArticleController
-    /**
-     * @Route("/article/create", name="create_article")
-     */
-    public function create(Request $request)
-    {
-        $entitymanager = $this->getDoctrine()->getManager();            //Appel du manager d'entité
-        $article = new Article();                                       //Création de l'article
-
-        $form = $this->createForm(CreateArticleType::class,$article);   //Appel/Création du formulaire
-        $form->handleRequest($request);                                 //Récupération du formulaire
-        if($form->isSubmitted() && $form->isValid()){                   //Vérification de la validité du formulaire
-            $article = $form->getData();                                // Récupération des informations saisies dans le formulaire
-            $entitymanager->persist($article);                          //Envoie de l'article en base de donnée
-            $entitymanager->flush();                                    //Confirmation de l'envoie
+    Pour cela nous allons ajouter une fonction à notre Controlleur Article ``src/Controller/ArticleController``:
+    
+    ````php
+        /**
+         * @Route("/article/show", name="show_article")    // Route de la nouvelle page
+         */
+        public function show()
+        {
+            $repository = $this->getDoctrine()->getRepository(Article::class); // On appel le gestionnaire
+            $articles = $repository->findAll();                                // On fait une requête pour récupérer tous les articles
+    
+            return $this->render('article/show.html.twig', [                   // Nouveau template
+                'articles' => $articles,
+            ]);
         }
-
-
-        return $this->render('article/create.html.twig', [
-            'form'=>$form->createView(),                                 //Envoie du formulaire à la vue
-        ]);
-    }
-```
-
-Puis nous allons l'afficher dans la vue ( Twig):
-
-```twig
-    {# templates/article/create.html.twig #}
+    ````
+    
+    Il reste maintenant à créer la vue correspondante en l'occurence ``templates/article/show.html.twig``:
+    
+    ````twig
     {% extends 'base.html.twig' %}
     
     {% block title %}Hello ArticleController!{% endblock %}
     
     {% block body %}
-    {{ form_start(form) }}
-    
-    {{ form_end(form) }}
+        {%  for article in articles %}
+            <h4>{{ article.name }} - {{ article.date |date("m/d/Y g:ia")  }}</h4>
+            <p>{{ article.content }}</p>
+            <br>
+            <br>
+        {% endfor %}
     {% endblock %}
-```
-A présent notre formulaire est prêt à fonctionner.
+    ````

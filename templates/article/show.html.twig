@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    {%  for article in articles %}
+        <h4>{{ article.name }} - {{ article.date |date("m/d/Y g:ia")  }}</h4>
+        <p>{{ article.content }}</p>
+        <br>
+        <br>
+    {% endfor %}
+{% endblock %}

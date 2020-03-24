@@ -31,4 +31,17 @@ class ArticleController extends AbstractController
             'form'=>$form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/article/show", name="show_article")    // Route de la nouvelle page
+     */
+    public function show()
+    {
+        $repository = $this->getDoctrine()->getRepository(Article::class); // On appel le gestionnaire
+        $articles = $repository->findAll();                                              // On fait une requête pour récupérer tous les articles
+
+        return $this->render('article/show.html.twig', [                            // Nouveau template
+            'articles' => $articles,
+        ]);
+    }
 }
