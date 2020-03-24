@@ -2,7 +2,7 @@
 
 Ce ReadME a pour but de vous aider à comprendre les principes de base du framework symfony.
 
-Certains aspects seront volontairement ignorés ou survolés afin de comprendre l'éssentiel du framework, mais si certains souhaitent aller plus loins ou mieux comprendre certains aspects je serais ravis de les aiders en ce sens par la suite.
+Certains aspects seront volontairement ignorés ou survolés afin de comprendre l'essentiel du framework, mais si certains souhaitent aller plus loin ou mieux comprendre certains aspects je serai ravie de les aider en ce sens par la suite.
 
 ### Prérequis
 ##### Techniques
@@ -46,7 +46,7 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
  Sinon vous avez uniquement Composer sur votre PC:
  `composer create-project symfony/website-skeleton my_project_name`
  
- Pour tester si l'installation a fonctionnée:
+ Pour tester si l'installation a fonctionné:
  `cd my-project/`
  puis
  `symfony server:start`
@@ -59,7 +59,7 @@ Symfony est accompagné de plusieurs bundles permettant l'utilisation de command
 
 Ces commandes commence généralement par: `php bin/console`
 
-et peuvent être suivis de différentes commandes: ``make / doctrine`` sont les plus utilisées en générale.
+et peuvent être suivis de différentes commandes: ``make / doctrine`` sont les plus utilisées en général.
 
 _Exemple:_ ``php bin/console make:entity`` permet de générer une entitée (objet) en respectant toutes les règles de Symfony.
 
@@ -72,9 +72,9 @@ Les dossiers principaux de votre application sont les suivant:
 * config
     * Contient tout les fichiers ``.yaml`` de configuration de l'application et des bundles.
 * public
-    * Contient tous les assets nécéssaire (accéssible publiquement) au fontionnement du site ex: css/jss/img/...
+    * Contient tous les assets nécéssaires (accéssible publiquement) au fontionnement du site ex: css/jss/img/...
 * src
-    * C'est **LE** dossier qui va contenir la casi totalitée de votre code. Il contiendrat tous vos Controllers, Entitées, Formulaires, ... mais nous reviendront sur ces notions plus tard.
+    * C'est **LE** dossier qui va contenir la quasi totalitée de votre code. Il contiendra tout vos Controllers, Entitées, Formulaires, ... mais nous reviendrons sur ces notions plus tard.
 * templates
     * Trés important aussi, c'est ici que les "vues" HTML seront définies.
 * tests
@@ -85,11 +85,11 @@ Les dossiers principaux de votre application sont les suivant:
 
 Enfin,
 * le fichier ``.env`` ou ``.env.local``
-    * C'est ici que seront définie les variables d'environnement. (Ex. La connexion a la base de données, serveur mail, ...)
+    * C'est ici que seront définies les variables d'environnement. (Ex. La connexion a la base de données, serveur mail, ...)
     
 ## Configuration de base
 
-Dans le ``.env`` nous allons configurer la connexion à une base de données. Il n'est pas nécéssaire que la base est été crée au préalable car Symfony peut se charger de cela pour vous.
+Dans le ``.env`` nous allons configurer la connexion à une base de données. Il n'est pas nécéssaire que la base ait été crée au préalable car Symfony peut se charger de cela pour vous.
 
 ``DATABASE_URL=mysql://username:password@127.0.0.1:3306/db_name?serverVersion=5.7`` 
 
@@ -97,9 +97,9 @@ Il suffit de remplacer les champs username, password et db_name par vos identifi
 
 ## Premier projet
 
-Ce mini projet a pour but de vous montrer les principes et fonctionnement de bases de Symfony. Nous allons mettre en place un simple site disposant d'un formulaire permettant de créer des articles, puis sur une autres pages nous afficherons la listes de ces articles.
+Ce mini projet a pour but de vous montrer les principes et fonctionnement de bases de Symfony. Nous allons mettre en place un simple site disposant d'un formulaire permettant de créer des articles, puis sur une autre page nous afficherons la liste de ces articles.
 
-Ensuite si le temps le permet nous verons comment gérer des utilisateur trés simplement (Inscription,Login) et comment limiter l'accés à certaines pages. 
+Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très simplement (Inscription,Login) et comment limiter l'accés à certaines pages. 
 1. #### Creation du premier Controller
     Pour cela nous allons donc utiliser la commande:
               
@@ -109,14 +109,14 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
           
           ``php bin/console make:entity``
           
-    Cette commande vas vous demander un nom pour votre entité suivit de la liste des attributs que vous souhaitez lui associer.
+    Cette commande va vous demander un nom pour votre entité suivi de la liste des attributs que vous souhaitez lui associer.
     
     Nous ajouterons donc:
     * nom (string 255)
     * date (datetime)
     * content (text)
     
-    L'entité a maintenant été générée par symfony et ce trouve dans: ``src/Entity`` nous allons légérement la modifier:
+    L'entité a maintenant été générée par symfony et se trouve dans: ``src/Entity`` nous allons légèrement la modifier:
     
     ````php
    public function __construct()                          //On ajoute un constructeur pour 
@@ -156,7 +156,7 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
                 ;
             }
     ````
-    On remarqueras que la ligne ``->add('date')`` a été enlevée car celle-ci serat automatiquement générée (sans saisie utilisateur).
+    On remarquera que la ligne ``->add('date')`` a été enlevée car celle-ci sera automatiquement générée (sans saisie utilisateur).
     
     Dans notre controller nous allons maintenant appeller notre formulaire:
     
@@ -240,4 +240,4 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
    
    [Documentation pour les formats de date Twig](https://twig.symfony.com/doc/3.x/filters/date.html)
    
-   Voila vous êtes maintenant capable de gérer un systeme d'articles avec Symfony. 
+   Voila vous êtes maintenant capable de gérer un système d'articles avec Symfony. 
