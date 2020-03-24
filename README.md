@@ -11,7 +11,7 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
 * Wamp/Xamp ou autres pour la base de donnée.
 ##### Connaissances
 * Des bases en POO PHP (similaire au JAVA).
-*
+
 ### Sommaire
 
 1. Introduction Symfony / Framework
@@ -116,7 +116,22 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
     * date (datetime)
     * content (text)
     
-    L'entité a maintenant été générée par symfony et ce trouve dans: ``src/Entity``
+    L'entité a maintenant été générée par symfony et ce trouve dans: ``src/Entity`` nous allons légérement la modifier:
+    
+    ````php
+   public function __construct()                           //On ajoute un constructeur pour qu'à la création de l'article la date soit mise à jour
+       {                                                   //qu'à la création de l'article 
+           $this->date = new \DateTime();                  //la date soit mise à jour.
+       }
+   
+   public function setDate(\DateTimeInterface $date): self //De même pour le setter de date.
+       {
+           $this->date = new \DateTime();
+   
+           return $this;
+       }
+
+    ````
     
     Il faut donc l'ajouter à la base de donnée pour cela:
     
@@ -129,7 +144,19 @@ Pour cela nous allons donc utiliser la commande:
           
           ``php bin/console make:form``
           
-Une fois le formulaire généré nous allons l'éditer dans :``src/Form``
+Une fois le formulaire généré nous allons l'éditer dans :``src/Form/CreateArticleType.php``
+
+````php
+    public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('name')
+                ->add('content')
+                ->add('ajouter',SubmitType::class) //On ajoute un bouton pour soumettre le formulaire
+            ;
+        }
+````
+On remarqueras que la ligne ``->add('date')`` a été enlevée car celle-ci serat automatiquement générée (sans saisie utilisateur).
 
 Dans notre controller nous allons maintenant appeller notre formulaire:
 
@@ -172,3 +199,4 @@ Puis nous allons l'afficher dans la vue ( Twig):
     {{ form_end(form) }}
     {% endblock %}
 ```
+A présent notre formulaire est prêt à fonctionner.
