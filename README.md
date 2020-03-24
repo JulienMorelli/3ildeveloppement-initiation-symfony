@@ -157,3 +157,17 @@ Dans notre controller nous allons maintenant appeller notre formulaire:
         ]);
     }
 ```
+
+Puis nous allons l'afficher dans la vue ( Twig):
+
+```twig
+    {% extends 'base.html.twig' %}
+    
+    {% block title %}Hello ArticleController!{% endblock %}
+    
+    {% block body %}
+    {{ form_start(form) }}
+    
+    {{ form_end(form) }}
+    {% endblock %}
+```
