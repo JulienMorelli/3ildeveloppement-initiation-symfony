@@ -236,3 +236,8 @@ Ensuite si le temps le permet nous verons comment gérer des utilisateur trés s
         {% endfor %}
     {% endblock %}
     ````
+   [Documentation pour les boucles Twig](https://twig.symfony.com/doc/2.x/tags/for.html)
+   
+   [Documentation pour les formats de date Twig](https://twig.symfony.com/doc/3.x/filters/date.html)
+   
+   Voila vous êtes maintenant capable de gérer un systeme d'articles avec Symfony. 
