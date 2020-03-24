@@ -1,14 +1,17 @@
-# 3idev init
+# 3IL Developpement initiation Symfony
 
 Ce ReadME a pour but de vous aider à comprendre les principes de base du framework symfony.
 
 Certains aspects seront volontairement ignorés ou survolés afin de comprendre l'éssentiel du framework, mais si certains souhaitent aller plus loins ou mieux comprendre certains aspects je serais ravis de les aiders en ce sens par la suite.
 
 ### Prérequis
-
+##### Techniques
 * PHP 7 ou + (accessible depuis le cmd ex: ``php -v``)
 * Composer
 * Wamp/Xamp ou autres pour la base de donnée.
+##### Connaissances
+* Des bases en POO PHP (similaire au JAVA).
+*
 ### Sommaire
 
 1. Introduction Symfony / Framework
@@ -131,25 +134,26 @@ Une fois le formulaire généré nous allons l'éditer dans :``src/Form``
 Dans notre controller nous allons maintenant appeller notre formulaire:
 
 ```php
+    //src/Controller/ArticleController
     /**
      * @Route("/article/create", name="create_article")
      */
     public function create(Request $request)
     {
-        $entitymanager = $this->getDoctrine()->getManager();
-        $article = new Article();
+        $entitymanager = $this->getDoctrine()->getManager();            //Appel du manager d'entité
+        $article = new Article();                                       //Création de l'article
 
-        $form = $this->createForm(CreateArticleType::class,$article);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $article = $form->getData();
-            $entitymanager->persist($article);
-            $entitymanager->flush();
+        $form = $this->createForm(CreateArticleType::class,$article);   //Appel/Création du formulaire
+        $form->handleRequest($request);                                 //Récupération du formulaire
+        if($form->isSubmitted() && $form->isValid()){                   //Vérification de la validité du formulaire
+            $article = $form->getData();                                // Récupération des informations saisies dans le formulaire
+            $entitymanager->persist($article);                          //Envoie de l'article en base de donnée
+            $entitymanager->flush();                                    //Confirmation de l'envoie
         }
 
 
         return $this->render('article/create.html.twig', [
-            'form'=>$form->createView(),
+            'form'=>$form->createView(),                                 //Envoie du formulaire à la vue
         ]);
     }
 ```
