@@ -95,6 +95,12 @@ Dans le ``.env`` nous allons configurer la connexion à une base de données. Il
 
 Il suffit de remplacer les champs username, password et db_name par vos identifiants d'accés à la base donnée et le nom que vous souhaitez donner à votre DB.
 
+
+On génère ensuite la base de donnée (si cela n'est pas dejà fait manuellement): 
+
+````shell script
+php bin/console doctrine:database:create
+````
 ## Premier projet
 
 Ce mini projet a pour but de vous montrer les principes et fonctionnement de bases de Symfony. Nous allons mettre en place un simple site disposant d'un formulaire permettant de créer des articles, puis sur une autre page nous afficherons la liste de ces articles.
@@ -103,11 +109,15 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
 1. #### Creation du premier Controller
     Pour cela nous allons donc utiliser la commande:
               
-              ``php bin/console make:controller``
+     ````shell script
+     php bin/console make:controller
+     ````
 1. #### Creation de l'entitée Article
     Pour cela nous allons donc utiliser la commande:
           
-          ``php bin/console make:entity``
+    ````shell script
+    php bin/console make:entity
+   ````
           
     Cette commande va vous demander un nom pour votre entité suivi de la liste des attributs que vous souhaitez lui associer.
     
@@ -142,7 +152,9 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
 1. #### Creation d'un formulaire
     Pour cela nous allons donc utiliser la commande:
               
-              ``php bin/console make:form``
+   ````shell script
+   php bin/console make:form
+   ````
               
     Une fois le formulaire généré nous allons l'éditer dans :``src/Form/CreateArticleType.php``
     
