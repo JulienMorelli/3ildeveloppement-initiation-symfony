@@ -1,0 +1,155 @@
+# 3idev init
+
+Ce ReadME a pour but de vous aider à comprendre les principes de base du framework symfony.
+
+Certains aspects seront volontairement ignorés ou survolés afin de comprendre l'éssentiel du framework, mais si certains souhaitent aller plus loins ou mieux comprendre certains aspects je serais ravis de les aiders en ce sens par la suite.
+
+### Prérequis
+
+* PHP 7 ou + (accessible depuis le cmd ex: ``php -v``)
+* Composer
+* Wamp/Xamp ou autres pour la base de donnée.
+### Sommaire
+
+1. Introduction Symfony / Framework
+1. Installation
+1. Explications commandes
+1. Arboresence et structure des fichiers
+1. Configuration de base
+1. Premier projet
+
+## Introduction
+
+* **Symfony c'est quoi ?**
+
+  « Symfony is a set of PHP Components, a Web Application framework, a Philosophy, and a Community — all working together in harmony. » - Symfony
+ 
+ * **Pourquoi devrais-je utiliser un framework?**
+ 
+ Un framework n'est pas absolument nécessaire: il est «juste» un des outils disponibles pour vous aider à développer mieux et plus vite!
+ 
+ Mieux, car un framework vous donne la certitude que vous développez une application en pleine conformité avec les règles métier, structurée, à la fois maintenable et évolutive.
+ 
+ Plus rapide, car il permet aux développeurs de gagner du temps en réutilisant des modules génériques afin de se concentrer sur d'autres domaines. Sans toutefois être lié au cadre lui-même.
+ 
+ 
+ ## Installation
+ 
+ [Documentation Installation](https://symfony.com/doc/current/setup.html)
+ 
+ Si vous avez déjà installé Symfony sur votre PC:
+ `symfony new my_project_name --full`
+ 
+ Sinon vous avez uniquement Composer sur votre PC:
+ `composer create-project symfony/website-skeleton my_project_name`
+ 
+ Pour tester si l'installation a fonctionnée:
+ `cd my-project/`
+ puis
+ `symfony server:start`
+ 
+Avec Symfony < v5.x `php bin/console server:run`
+
+## Explication Commandes
+
+Symfony est accompagné de plusieurs bundles permettant l'utilisation de commandes pour accélérer certaines tâches.
+
+Ces commandes commence généralement par: `php bin/console`
+
+et peuvent être suivis de différentes commandes: ``make / doctrine`` sont les plus utilisées en générale.
+
+_Exemple:_ ``php bin/console make:entity`` permet de générer une entitée (objet) en respectant toutes les règles de Symfony.
+
+[Listes des commandes utiles](https://tonypayet.com/symfony-4-listing-des-lignes-de-commandes-de-base/) (ces commandes sont toujours valables pour Symfony 5)
+
+
+## Arborescence et structure des fichiers 
+
+Les dossiers principaux de votre application sont les suivant:
+* config
+    * Contient tout les fichiers ``.yaml`` de configuration de l'application et des bundles.
+* public
+    * Contient tous les assets nécéssaire (accéssible publiquement) au fontionnement du site ex: css/jss/img/...
+* src
+    * C'est **LE** dossier qui va contenir la casi totalitée de votre code. Il contiendrat tous vos Controllers, Entitées, Formulaires, ... mais nous reviendront sur ces notions plus tard.
+* templates
+    * Trés important aussi, c'est ici que les "vues" HTML seront définies.
+* tests
+    * Permet de définir des test unitaires, mais nous ne traiterons pas cela ici.
+* vendor
+    * Contient toutes les dépendances/bundles de l'application (Vous n'aurez **JAMAIS** à l'éditer).
+
+
+Enfin,
+* le fichier ``.env`` ou ``.env.local``
+    * C'est ici que seront définie les variables d'environnement. (Ex. La connexion a la base de données, serveur mail, ...)
+    
+## Configuration de base
+
+Dans le ``.env`` nous allons configurer la connexion à une base de données. Il n'est pas nécéssaire que la base est été crée au préalable car Symfony peut se charger de cela pour vous.
+
+``DATABASE_URL=mysql://username:password@127.0.0.1:3306/db_name?serverVersion=5.7`` 
+
+Il suffit de remplacer les champs username, password et db_name par vos identifiants d'accés à la base donnée et le nom que vous souhaitez donner à votre DB.
+
+## Premier projet
+
+Ce mini projet a pour but de vous montrer les principes et fonctionnement de bases de Symfony. Nous allons mettre en place un simple site disposant d'un formulaire permettant de créer des articles, puis sur une autres pages nous afficherons la listes de ces articles.
+
+Ensuite si le temps le permet nous verons comment gérer des utilisateur trés simplement (Inscription,Login) et comment limiter l'accés à certaines pages. 
+1. #### Creation du premier Controller
+    Pour cela nous allons donc utiliser la commande:
+              
+              ``php bin/console make:controller``
+1. #### Creation de l'entitée Article
+    Pour cela nous allons donc utiliser la commande:
+          
+          ``php bin/console make:entity``
+          
+    Cette commande vas vous demander un nom pour votre entité suivit de la liste des attributs que vous souhaitez lui associer.
+    
+    Nous ajouterons donc:
+    * nom (string 255)
+    * date (datetime)
+    * content (text)
+    
+    L'entité a maintenant été générée par symfony et ce trouve dans: ``src/Entity``
+    
+    Il faut donc l'ajouter à la base de donnée pour cela:
+    
+    `` php bin/console make:migration``
+    
+    ``php bin/console doctrine:migration:migrate``
+    
+1. #### Creation d'un formulaire
+Pour cela nous allons donc utiliser la commande:
+          
+          ``php bin/console make:form``
+          
+Une fois le formulaire généré nous allons l'éditer dans :``src/Form``
+
+Dans notre controller nous allons maintenant appeller notre formulaire:
+
+```php
+    /**
+     * @Route("/article/create", name="create_article")
+     */
+    public function create(Request $request)
+    {
+        $entitymanager = $this->getDoctrine()->getManager();
+        $article = new Article();
+
+        $form = $this->createForm(CreateArticleType::class,$article);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $article = $form->getData();
+            $entitymanager->persist($article);
+            $entitymanager->flush();
+        }
+
+
+        return $this->render('article/create.html.twig', [
+            'form'=>$form->createView(),
+        ]);
+    }
+```
