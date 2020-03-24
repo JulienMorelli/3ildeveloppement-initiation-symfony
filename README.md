@@ -161,6 +161,7 @@ Dans notre controller nous allons maintenant appeller notre formulaire:
 Puis nous allons l'afficher dans la vue ( Twig):
 
 ```twig
+    {# templates/article/create.html.twig #}
     {% extends 'base.html.twig' %}
     
     {% block title %}Hello ArticleController!{% endblock %}
