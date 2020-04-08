@@ -418,7 +418,7 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
         ````  
    - Configuration:
     
-        Ici la configuration est simple, en installant le bundle un fichier dédié a été générer dans nos fichiers de configurations ``App\config\packages\easy_admin.yaml``.
+        Ici la configuration est simple, en installant le bundle un fichier dédié a été généré dans nos fichiers de configurations ``App\config\packages\easy_admin.yaml``.
         
         Il suffit donc à présent de spécifier qu'elles sont les entités que nous souhaitons administrer.
         Dans notre cas Article et User.
