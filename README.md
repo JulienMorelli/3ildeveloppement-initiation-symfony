@@ -458,7 +458,7 @@ framework:
    ![alt text][logo]
    <b>3IL Developpement</b> </p>
    
-   [logo]: https://github.com/JulienMorelli/3ildeveloppement-initiation-symfony/blob/master/public/img/logo.png
+   [logo]: https://github.com/JulienMorelli/3ildeveloppement-initiation-symfony/blob/master/public/img/logo.png "Logo Title Text 2"
    
 
        
