@@ -1,4 +1,4 @@
-# 3IL Developpement initiation Symfony
+# <img height="32px" src="/public/img/logo.png" alt="logo"> 3IL Developpement initiation Symfony
 
 Ce ReadME a pour but de vous aider à comprendre les principes de base du framework symfony.
 
