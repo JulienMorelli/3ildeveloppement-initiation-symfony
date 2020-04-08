@@ -253,3 +253,24 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    [Documentation pour les formats de date Twig](https://twig.symfony.com/doc/3.x/filters/date.html)
    
    Voila vous êtes maintenant capable de gérer un système d'articles avec Symfony. 
+   
+## Sécurité, Utilisateur et Administration
+
+    Nous allons à présent ajouter à notre projet un systeme de gestion d'utilisateurs avec inscription, connexion, gestion des droits et restriction d'accès.
+    Pour cela nous utiliserons directement le composant appelé "sécurité" de Symfony.
+    Ce composant a pour avantage d'être simple à utilisé, sécurisé, et maintenue par Symfony. Cependant il existe des bundles plus complet et plus avancés, tel que FOSUserBundle mais par conséquent il est un peut plus compliqué à déployer.
+    Par la suite nous verons comment de façons très simple il nous est possible de créer un interface d'administration complète.
+    
+1. #### Création de la classe Utilisateur
+
+    Pou cela on vas commencer par lancer la commande :
+    `````shell script
+         php bin/console make:user 
+   `````
+   Et enfaite... c'est tout. Voila vous avez généré votre classe utilisateur et vous pouvez lui ajouter autant de champs et méthodes que vous le souhaitez.
+   Maintenant il ne reste plus qu'à envoyer tout ça en BDD.
+    `````shell script
+        php bin/console make:migration
+        php bin/console doctrine:migrations:migrate
+    `````
+   Il est important de préciser que cette commande ressemble particulièrement à la commande `` make:entity ``. L'avantage ici est que Symfony reconnait que l'on souhaite utiliser le composant "Sécurité" pour gérer nos utilisateurs et vas donc faire le nécéssaire pour reconnaitre cette classe de la sorte.
