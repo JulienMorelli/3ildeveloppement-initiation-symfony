@@ -54,6 +54,15 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
  
 Avec Symfony < v5.x `php bin/console server:run`
 
+Pour installer **CE** projet:
+ * Télécharger le dossier depuis GitHub
+ * Depuis le répertoire du projet lancer 
+    ````shell script
+    composer install
+    php bin/console doctrine:schema:update --force
+    ````
+  
+
 ## Explication Commandes
 
 Symfony est accompagné de plusieurs bundles permettant l'utilisation de commandes pour accélérer certaines tâches.
