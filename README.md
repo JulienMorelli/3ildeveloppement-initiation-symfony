@@ -254,16 +254,16 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    
    Voila vous êtes maintenant capable de gérer un système d'articles avec Symfony. 
    
-## Sécurité, Utilisateur et Administration
+## Sécurité, Utilisateur et Administration.
 
-    Nous allons à présent ajouter à notre projet un systeme de gestion d'utilisateurs avec inscription, connexion, gestion des droits et restriction d'accès.
-    Pour cela nous utiliserons directement le composant appelé "sécurité" de Symfony.
-    Ce composant a pour avantage d'être simple à utilisé, sécurisé, et maintenue par Symfony. Cependant il existe des bundles plus complet et plus avancés, tel que FOSUserBundle mais par conséquent il est un peut plus compliqué à déployer.
-    Par la suite nous verons comment de façons très simple il nous est possible de créer un interface d'administration complète.
+   Nous allons à présent ajouter à notre projet un systeme de gestion d'utilisateurs avec inscription, connexion, gestion des droits et restriction d'accès.
+   Pour cela nous utiliserons directement le composant appelé "sécurité" de Symfony.
+   Ce composant a pour avantage d'être simple à utilisé, sécurisé, et maintenue par Symfony. Cependant il existe des bundles plus complet et plus avancés, tel que FOSUserBundle mais par conséquent il est un peut plus compliqué à déployer.
+   Par la suite nous verons comment de façons très simple il nous est possible de créer un interface d'administration complète.
     
 1. #### Création de la classe Utilisateur
 
-    Pou cela on vas commencer par lancer la commande :
+    Pour cela on vas commencer par lancer la commande :
     `````shell script
          php bin/console make:user 
    `````
