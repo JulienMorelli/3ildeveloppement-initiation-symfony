@@ -402,11 +402,11 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    
    A partir d'ici la mise en place est extrèmement simple:
    
-   1. Installation du bundle:
+   - Installation du bundle:
         ````shell script
         composer require admin
         ````  
-   1. Configuration:
+   - Configuration:
     
         Ici la configuration est simple, en installant le bundle un fichier dédié a été générer dans nos fichiers de configurations ``App\config\packages\easy_admin.yaml``.
         
