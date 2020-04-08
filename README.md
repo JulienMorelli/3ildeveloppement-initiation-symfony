@@ -454,8 +454,8 @@ framework:
    Avec Easy admin on peux facilement [customiser notre interface](https://symfony.com/doc/master/bundles/EasyAdminBundle/book/list-search-show-configuration.html) et les formulaires générés.
    
    ***
-   <p align="center"> <b>Julien Morelli </b> 
-   <img height="16px" src="/public/img/logo.png" alt="logo">
+   <p align="center"> <b>Julien Morelli</b> 
+   &nbsp;<img height="16px" src="/public/img/logo.png" alt="logo">
    <b>3IL Developpement</b> </p>
    
 
