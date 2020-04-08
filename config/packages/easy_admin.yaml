@@ -1,5 +1,29 @@
 easy_admin:
+    site_name: 'Démo EasyAdmin'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+    user:
+        # this method/property must return the string representation of the user
+        # (Symfony will look for getFullName(), isFullName(), ..., and 'fullName' property)
+        name_property_path: 'username'
     entities:
+        Article:
+            class: App\Entity\Article
+            label: 'Articles'
+            list:
+                title: 'Liste des %%entity_label%%'
+                fields:
+                    - { property: 'name', label: 'Titre' }
+                    - { property: 'content', label: 'Contenue' }
+                    - { property: 'date', label: 'Date de création' }
+            form:
+                fields:
+                    - { property: 'name', label: 'Titre' }
+                    - { property: 'content', label: 'Contenue', type: 'text_editor' }
         # List the entity class name you want to manage
-        - App\Entity\Article
-        - App\Entity\User
+        User:
+            class: App\Entity\User
+            form:
+                fields: ['username', { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } }, label: 'Roles (Ctrl+clic) pour séléctionner' }]
