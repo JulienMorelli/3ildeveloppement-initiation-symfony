@@ -455,7 +455,7 @@ framework:
    
    ***
    <p align="center"> <b>Julien Morelli</b> 
-   ![alt text][logo]
+   <img src="https://github.com/JulienMorelli/3ildeveloppement-initiation-symfony/blob/master/public/img/logo.png" alt="logo">
    <b>3IL Developpement</b> </p>
    
    [logo]: https://github.com/JulienMorelli/3ildeveloppement-initiation-symfony/blob/master/public/img/logo.png "Logo Title Text 2"
