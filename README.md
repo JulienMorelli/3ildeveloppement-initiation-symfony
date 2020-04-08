@@ -43,7 +43,7 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
  Si vous avez déjà installé Symfony sur votre PC:
  `symfony new my_project_name --full`
  
- Sinon vous avez uniquement Composer sur votre PC:
+ Sinon vous avez uniquement [Composer](https://getcomposer.org/) sur votre PC:
  `composer create-project symfony/website-skeleton my_project_name`
  
  Pour tester si l'installation a fonctionné:
@@ -257,7 +257,7 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
 ## Sécurité, Utilisateur et Administration.
 
    Nous allons à présent ajouter à notre projet un systeme de gestion d'utilisateurs avec inscription, connexion, gestion des droits et restriction d'accès.
-   Pour cela nous utiliserons directement le composant appelé "sécurité" de Symfony.
+   Pour cela nous utiliserons directement le composant appelé "[Security](https://symfony.com/doc/current/security.html)" de Symfony.
    Ce composant a pour avantage d'être simple à utilisé, sécurisé, et maintenue par Symfony. Cependant il existe des bundles plus complet et plus avancés, tel que FOSUserBundle mais par conséquent il est un peut plus compliqué à déployer.
    Par la suite nous verons comment de façons très simple il nous est possible de créer un interface d'administration complète.
     
@@ -274,3 +274,83 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
         php bin/console doctrine:migrations:migrate
     `````
    Il est important de préciser que cette commande ressemble particulièrement à la commande `` make:entity ``. L'avantage ici est que Symfony reconnait que l'on souhaite utiliser le composant "Sécurité" pour gérer nos utilisateurs et vas donc faire le nécéssaire pour reconnaitre cette classe de la sorte.
+   
+1. #### Création du formulaire d'Inscription et de Connexion
+    
+    **[Formulaire de d'Inscription:](https://symfony.com/doc/4.1/doctrine/registration_form.html)**
+    
+    Pour générer le [formulaire d'inscription](https://symfony.com/doc/4.1/doctrine/registration_form.html) lancez la commande :
+    `````shell script
+       php bin/console make:registration-form
+    `````
+   Puis nous allons en suivant la documentation créer un Controller qui vas gérer l'inscription, voici sont code:
+   `````php
+   // App\Controller\RegistrationController.php
+   
+   namespace App\Controller;
+   
+   use App\Entity\User;
+   use App\Form\RegistrationFormType;
+   use App\Security\AppUserAuthenticator;
+   use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+   use Symfony\Component\HttpFoundation\Request;
+   use Symfony\Component\HttpFoundation\Response;
+   use Symfony\Component\Routing\Annotation\Route;
+   use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+   use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+   
+   class RegistrationController extends AbstractController
+   {
+       /**
+        * @Route("/register", name="app_register")
+        */
+       public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppUserAuthenticator $authenticator): Response
+       {
+           $user = new User();
+           $form = $this->createForm(RegistrationFormType::class, $user);
+           $form->handleRequest($request);
+   
+           if ($form->isSubmitted() && $form->isValid()) {
+               // encode the plain password
+               $user->setPassword(
+                   $passwordEncoder->encodePassword(
+                       $user,
+                       $form->get('plainPassword')->getData()
+                   )
+               );
+   
+               $entityManager = $this->getDoctrine()->getManager();
+               $entityManager->persist($user);
+               $entityManager->flush();
+   
+               // do anything else you need here, like send an email
+   
+               return $this->redirect('login');
+
+           }
+   
+           return $this->render('registration/register.html.twig', [
+               'registrationForm' => $form->createView(),
+           ]);
+       }
+   }
+   `````
+   
+   Il nous est à présent possible de s'inscrire sur notre site. (Il est possible qu'à ce point vous obteniez une erreur après l'inscription car nous avons pas encore créer la route vers laquelle le controller cherche à rediriger).
+   
+   **[Formulaire de Connexion:](https://symfony.com/doc/current/security/form_login_setup.html)**
+   
+   Pour cela on commance par lancer la commande:
+   `````shell script
+       php bin/console make:auth
+   `````
+   Cette commande a pour effet de générer le controller, le formulaireet la vue liés à la connexion (le controller ``SecurityController``).
+   
+   Un dossier Security a normalement du apparaitre dans le dossier src. Il est nécéssaire d'y éditer le fichier ``LoginFormAuthenticator.php``  afin d'y spécifier la route de redirèction après connexion. Pour cela il suffit de décommenter la ligne suivante:
+   ````php
+           return new RedirectResponse($this->urlGenerator->generate('some_route'));
+    ````
+   Puis de remplacer "``some_route``" par le nom de la route, dans notre cas "``home``".
+   
+   
+   
