@@ -430,6 +430,16 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    **:warning: Attention :warning: A ce stade l'interface admin est accessible par n'importe quel utilisateurs même les utilisateurs anonymes, il faut donc faire le nécéssaire pour restreindre sont accès aux administrateurs seulement.**
    
 ## Bonus
+#### :fr: Passer l'interface en Français
+````yaml
+#App\config\packages\translation.yaml
+framework:
+    default_locale: fr
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks:
+            - fr
+````
 #### Customisation de l'interface EasyAdmin
    
    Avec Easy admin on peux facilement [customiser notre interface](https://symfony.com/doc/master/bundles/EasyAdminBundle/book/list-search-show-configuration.html) et les formulaires générés.
