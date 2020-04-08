@@ -426,6 +426,13 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
       
       On peux donc d'ors et déja la tester.
    
-   **:warning: Attention :warning: A ce stade l'interface admin est accessible par n'importe quel utilisateur même les utilisateurs anonymes, il faut donc faire le nécéssaire pour restreindre sont accès au administrateur seulement.**
+   **:warning: Attention :warning: A ce stade l'interface admin est accessible par n'importe quel utilisateurs même les utilisateurs anonymes, il faut donc faire le nécéssaire pour restreindre sont accès aux administrateurs seulement.**
+   
+## Bonus
+#### [Customisation de l'interface EasyAdmin](https://symfony.com/doc/master/bundles/EasyAdminBundle/book/list-search-show-configuration.html)
+   
+   Avec Easy admin on peux facilement customiser notre interface et les formulaires générés.
+   
+   
 
        
