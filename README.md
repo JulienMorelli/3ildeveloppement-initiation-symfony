@@ -20,6 +20,7 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
 1. Arboresence et structure des fichiers
 1. Configuration de base
 1. Premier projet
+1. Sécurité, Utilisateurs et Administration
 
 ## Introduction
 
@@ -254,7 +255,7 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    
    Voila vous êtes maintenant capable de gérer un système d'articles avec Symfony. 
    
-## Sécurité, Utilisateur et Administration.
+## Sécurité, Utilisateurs et Administration.
 
    Nous allons à présent ajouter à notre projet un systeme de gestion d'utilisateurs avec inscription, connexion, gestion des droits et restriction d'accès.
    Pour cela nous utiliserons directement le composant appelé "[Security](https://symfony.com/doc/current/security.html)" de Symfony.
