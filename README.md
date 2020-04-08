@@ -455,9 +455,8 @@ framework:
    
    ***
    <p align="center"> <b>Julien Morelli</b> 
-   <img src="/public/img/logo.png" alt="logo">
+   <img height="16px" src="/public/img/logo.png" alt="logo">
    <b>3IL Developpement</b> </p>
-   ![alt text](/public/img/logo.png)
    
 
        
