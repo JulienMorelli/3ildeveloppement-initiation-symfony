@@ -287,7 +287,7 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
    
 1. #### Création du formulaire d'Inscription et de Connexion
     
-    **[Formulaire de d'Inscription:](https://symfony.com/doc/4.1/doctrine/registration_form.html)**
+    **[Formulaire d'Inscription:](https://symfony.com/doc/4.1/doctrine/registration_form.html)**
     
     Pour générer le [formulaire d'inscription](https://symfony.com/doc/4.1/doctrine/registration_form.html) lancez la commande :
     `````shell script
