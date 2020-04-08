@@ -351,6 +351,81 @@ Ensuite si le temps le permet nous verrons comment gérer des utilisateurs très
            return new RedirectResponse($this->urlGenerator->generate('some_route'));
     ````
    Puis de remplacer "``some_route``" par le nom de la route, dans notre cas "``home``".
+  
+1. #### Mise en place des rôles et gestion des accès
+
+    [Documentation sur les rôles.](https://symfony.com/doc/current/security.html#denying-access-roles-and-other-authorization)
+
+    Pour commencer nous allons distinguer deux catégories d'utilisateur:
+        
+    * Les utilisateurs anonymes:
+    
+        C'est à dire tous les visiteurs du site qui ne seraient pas connécté. Symfony leurs attribue le rôle "``IS_AUTHENTICATED_ANONIMOUSLY``".
+    
+    * Les utilisateurs (normaux):
+    
+        Tous ceux qui dispose d'un compte et qui ce sont connécté. Par defaut Symfony leurs attribue a tous le rôle "``ROLE_USER``".
+    
+    Il nous est ensuite possible de créer autant de rôle que nous le souhaitons comme par exemple le rôle "``ROLE_ADMIN``" qui comme sont nom l'indique permet de distinguer les administrateur.
+    De plus un utilisteur peux avoir autant de rôle que nécéssaire.
+    
+    Il est possible de definir une hirarchie au sein des rôles que vous créez en suivant [cette documentation](https://symfony.com/doc/current/security.html#hierarchical-roles).
+    
+    Ces rôles sont à spécifier dans la table user de notre BDD et ce note par un tableau au format JSON.
+    
+    **Gestion des accés:**
+    
+    A partir de ces rôles il nous est a présent possible de restreindre l'accés a certaine partie ou fonctionnalité de notre site.
+    
+    Pour cela il suffit d'éditer le fichier de configuration ``App\config\packages\security.yaml``, c'est dans ce fichier que s'éffectue toute la configuration du package "Security" de Symfony.
+    
+    ````yaml
+     access_control:
+             - { path: ^/article/create, roles: ROLE_USER } 
+   ````
    
+   En dessous de ``acces_control:`` nous allons rajouter une ligne afin de spécifier que la route "/article/create" est uniquement accessible pour des utilisateurs connécté.
    
+   A présent si vous essayez de joindre cette route sans être authentifié vous serez redirigé vers la page de connexion.
+  
+1. #### Création d'une interface administrateur complette
+
+    Avec Symfony il existe une beaucoup de façon de créer une interface administrateur. 
+    
+    * Par exemple il est possible de créer des formulaires et des controllers dédié à chaque entité ou fonctionalité que l'on souhaite administrer. Cette méthode vous permet d'avoir un controle totale sur ce qui est réalisé, cependant elle peux s'avérer longue et fastidieuse si beaucoup de fonctionalités sont attendue.
+    
+    * Dans certains cas il serat beaucoup plus pratique d'utiliser des bundles dédié à l'administration. Il en existe des dixaines mais deux des plus abordable et complet sont "[EasyAdminBundle](https://symfony.com/doc/master/bundles/EasyAdminBundle/index.html)" et "[SonataBundle](https://sonata-project.org/bundles/admin/3-x/doc/index.html)".
    
+   Dans notre cas nous préviligirons la deuxieme solution car plus facile a mettre en place et plus adapté à notre cas.
+   
+   Nous utiliserons donc "[EasyAdminBundle](https://symfony.com/doc/master/bundles/EasyAdminBundle/index.html)" car ce bundle a l'avantage d'être officiellement reconnue par Symfony et est donc documenté directement par Symfony.
+   
+   A partir d'ici la mise en place est extrèmement simple:
+   
+   1. Installation du bundle:
+        ````shell script
+        composer require admin
+        ````  
+   1. Configuration:
+    
+        Ici la configuration est simple, en installant le bundle un fichier dédié a été générer dans nos fichiers de configurations ``App\config\packages\easy_admin.yaml``.
+        
+        Il suffit donc à présent de spécifier qu'elles sont les entités que nous souhaitons administrer.
+        Dans notre cas Article et User.
+        ````yaml
+        easy_admin:
+            entities:
+                # List the entity class name you want to manage
+                - App\Entity\Article
+                - App\Entity\User
+        ````
+      
+      Voila notre interface admin est prète.
+      
+      En regardant de plus prêt on s'appercoie qu'un autre fichier de configuration a été créer dans ``App\config\routes\easy_admin.yaml`` c'est ici qu'il est spécifié la route d'accés a l'interface admin (Par défaut "``/admin``").
+      
+      On peux donc d'ors et déja la tester.
+   
+   **:warning: Attention :warning: A ce stade l'interface admin est accessible par n'importe quel utilisateur même les utilisateurs anonymes, il faut donc faire le nécéssaire pour restreindre sont accès au administrateur seulement.**
+
+       
