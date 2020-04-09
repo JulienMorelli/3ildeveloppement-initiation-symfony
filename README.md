@@ -14,12 +14,12 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
 
 ### Sommaire
 
-1. Introduction Symfony / Framework
-1. Installation
-1. Explications commandes
-1. Arboresence et structure des fichiers
-1. Configuration de base
-1. Premier projet
+1. [Introduction Symfony / Framework](#introduction)
+1. [Installation](#installation)
+1.[ Explications commandes](#explication-commandes)
+1. [Arboresence et structure des fichiers](#arborescence-et-structure-des-fichiers)
+1. [Configuration de base](#configuration-de-base)
+1. [Premier projet](#premier-projet)
 1. [Sécurité, Utilisateurs et Administration](#sécurité-utilisateurs-et-administration)
 
 ## Introduction
