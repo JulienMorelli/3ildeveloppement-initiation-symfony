@@ -16,7 +16,7 @@ Certains aspects seront volontairement ignorés ou survolés afin de comprendre 
 
 1. [Introduction Symfony / Framework](#introduction)
 1. [Installation](#installation)
-1.[ Explications commandes](#explication-commandes)
+1. [Explications commandes](#explication-commandes)
 1. [Arboresence et structure des fichiers](#arborescence-et-structure-des-fichiers)
 1. [Configuration de base](#configuration-de-base)
 1. [Premier projet](#premier-projet)
